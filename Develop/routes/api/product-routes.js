@@ -126,7 +126,7 @@ try {
     where: { id: req.params.id },
   });
   res.status(200).json({message:"Deleted Successfully"});
-}catch(err) {
+}catch (err) {
   res.status(500).json({err, message:"Error With Delete"});
 }
 });
