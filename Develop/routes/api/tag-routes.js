@@ -24,14 +24,26 @@ router.get('/:id', async (req, res) => {
     const singleTag = await Tag.findByPk(req.params.id,{
       include:[{model: Product, through: ProductTag}],
     });
+
+    if(!singleTag){
+      res.status(404).json({ message: 'Tag not found' });
+      return;
+  }
+
     res.status(200).json(singleTag);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // create a new tag
+  try{
+    const newTag = await Tag.create(req.body);
+    res.status(200).json(newTag);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 router.put('/:id', (req, res) => {
